@@ -50,7 +50,8 @@ public class cs4390cp_server{
 
 				while(true){
 					String temp = input.readLine();
-					System.out.println(temp);
+					String ret = String.format("[%s:%d] - %s%n",socket.getLocalAddress().toString(),socket.getPort(),temp);
+					System.out.print(ret);
 
 					if(temp == null){
 						try{
@@ -65,15 +66,18 @@ public class cs4390cp_server{
 						for(int i = 0; i < pw.size(); i++){
 							PrintWriter tempW = pw.get(i);
 							if(tempW != output){
-									tempW.println(temp);
+									tempW.println(ret);
 							}
 						}
 					}
 				}
 			} catch(IOException e){	// client forcefully (ctrl + c) disconnects
-				System.out.println("ERROR: FLAG 1");
-				System.exit(-1);
+				System.out.printf("[%s:%d] has left the server%n", socket.getLocalAddress().toString(), socket.getPort());
+				// System.out.println("ERROR: FLAG 1");
+				return;
+				// System.exit(-1);
 			} finally{
+				// System.out.println("finally");
 				pw.remove(output);
 				try{
 					socket.close();
