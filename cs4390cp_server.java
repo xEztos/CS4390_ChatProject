@@ -50,18 +50,22 @@ public class cs4390cp_server{
 
 				while(true){
 					String temp = input.readLine();
-					String ret = String.format("[%s:%d] - %s%n",socket.getLocalAddress().toString(),socket.getPort(),temp);
-					System.out.print(ret);
+					String ret = String.format("[%s:%d] - %s",socket.getLocalAddress().toString(),socket.getPort(),temp);
+					System.out.println(ret);
 
 					if(temp == null){
-						try{
-							wait();
-						} catch (InterruptedException e){
-							System.out.println("ERROR: FLAG 2");
-						}
-						
-					} else if(temp.equalsIgnoreCase("exit")){
+						String message = String.format("[%s:%d] has left the server", socket.getLocalAddress().toString(), socket.getPort());
+						System.out.println(message);
+						broadcast(message);
 						return;
+						// try{
+						// 	wait();
+						// } catch (InterruptedException e){
+						// 	System.out.println("ERROR: FLAG 2");
+						// }
+						
+					// } else if(temp.equalsIgnoreCase("exit")){
+					// 	return;
 					} else{
 						for(int i = 0; i < pw.size(); i++){
 							PrintWriter tempW = pw.get(i);
@@ -72,8 +76,10 @@ public class cs4390cp_server{
 					}
 				}
 			} catch(IOException e){	// client forcefully (ctrl + c) disconnects
-				System.out.printf("[%s:%d] has left the server%n", socket.getLocalAddress().toString(), socket.getPort());
-				// System.out.println("ERROR: FLAG 1");
+				// String message = String.format("[%s:%d] has left the server%n", socket.getLocalAddress().toString(), socket.getPort());
+				// System.out.print(message);
+				// broadcast(message);
+				System.out.println("ERROR: FLAG 1");
 				return;
 				// System.exit(-1);
 			} finally{
@@ -84,6 +90,13 @@ public class cs4390cp_server{
 				} catch( IOException e){
 					System.out.println("ERROR: FLAG 4");
 				}
+			}
+		}
+
+		public void broadcast(String s){
+			for(int i = 0; i < pw.size(); i++){
+				PrintWriter tempW = pw.get(i);
+				tempW.println(s);
 			}
 		}
 	}
