@@ -47,6 +47,10 @@ public class cs4390cp_server{
 		BufferedReader input;
 		PrintWriter output;
 
+		/**
+		 * Constructor for a client communicator to a specified socket
+		 * @param socket the socket the cilent will be communicating from
+		 */
 		ClientComm(Socket socket){
 			this.socket = socket;
 		}
