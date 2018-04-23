@@ -2,12 +2,19 @@ import java.io.*;
 import java.util.*;
 import java.net.*;
 
+/**
+ *	Main class for the chat client. Enables a user to chat with fellow users after connecting to a central server
+ */
 public class cs4390cp_client{
 	static int port = 1;
 	static Socket socket;
 	static PrintWriter toServer;
 	static BufferedReader fromServer;
 
+	/**
+	 *	Main method. Sets up a socket, probes for a valid server, and communicates with the server.
+	 *	@args not used
+	 */
 	public static void main(String[] args) throws IOException{
 		try{
 			try{
@@ -37,23 +44,14 @@ public class cs4390cp_client{
 		}
 	}
 
-
-	// private static class serverSend extends Thread{
-	// 	public void run(){
-	// 		try{
-	// 			Scanner sc = new Scanner(System.in);
-	// 			while(true){
-	// 				String temp = sc.nextLine();
-	// 				toServer.println(temp);
-	// 			}
-
-	// 		} catch (IOException e){
-	// 			System.out.println("ERROR: serverSend FLAG 0");
-	// 		}
-	// 	}
-	// }
-
+	/**
+	 * Subclass that enables the chat client to recieve messages from the chat server on a seperate thread, enabling for concurrent user and server inputs.
+	 */
 	private static class serverRecieve extends Thread{
+
+		/**
+		 * run method run by the thread class upon calling of the extended start method.
+		 */
 		public void run(){
 			try{
 				fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
