@@ -69,8 +69,9 @@ public class cs4390cp_client{
 						System.out.println(temp);
 					}
 				}
-			} catch (Exception e){
-				System.out.println(e);
+			} catch (IOException e){
+				// System.out.println(e);
+				System.out.printf("The server has been disconnected. The client is now closing.");
 				System.exit(-1);
 			}
 		}

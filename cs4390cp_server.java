@@ -66,8 +66,11 @@ public class cs4390cp_server{
 						
 					// } else if(temp.equalsIgnoreCase("exit")){
 					// 	return;
-					} else{
+					} else if(pw.size() == 1){
+						output.printf("SERVER - There is nobody else on the server.");
+					}else{
 						for(int i = 0; i < pw.size(); i++){
+
 							PrintWriter tempW = pw.get(i);
 							if(tempW != output){
 									tempW.println(ret);
